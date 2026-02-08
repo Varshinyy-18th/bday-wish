@@ -136,3 +136,46 @@
             if(!document.fullscreenElement && !document.webkitFullscreenElement) {
                 if (docEl.requestFullscreen) docEl.requestFullscreen();
                 else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
+                btn.innerHTML = "Minimize";
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                btn.innerHTML = "Maximize";
+            }
+        }
+
+        function launchConfetti() {
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = birthdayDate - now;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("countdown-section").style.display = "none";
+                document.getElementById("celebration").style.display = "flex";
+                launchConfetti(); 
+                return;
+            }
+
+            const days = Math.floor(distance / 86400000);
+            const hours = Math.floor((distance % 86400000) / 3600000);
+            const minutes = Math.floor((distance % 3600000) / 60000);
+            const seconds = Math.floor((distance % 60000) / 1000);
+
+            document.getElementById("days").innerHTML = (days < 10 ? "0"+days : days);
+            document.getElementById("hours").innerHTML = (hours < 10 ? "0"+hours : hours);
+            document.getElementById("minutes").innerHTML = (minutes < 10 ? "0"+minutes : minutes);
+            document.getElementById("seconds").innerHTML = (seconds < 10 ? "0"+seconds : seconds);
+        }, 1000);
+    </script>
+</body>
+</html>
