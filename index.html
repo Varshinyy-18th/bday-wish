@@ -8,7 +8,7 @@
     
     <style>
         body {
-            background-image: url('your-bg-image.jpg'); 
+            background-image: url('Untitled design.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -22,10 +22,9 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            /* Helps with iPhone notch/home bar area */
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
 
+        /* --- Countdown Container --- */
         .container {
             display: flex;
             flex-direction: column;
@@ -33,35 +32,42 @@
             margin-top: -63vh; 
         }
 
-        h1 {
+        /* --- Celebration Container (Hidden at start) --- */
+        #celebration {
+            display: none; /* Stays hidden until timer hits 0 */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        h1, h2 {
             font-size: 1.8rem; 
             color: #4a4a4a;
-            margin: 0 0 5px 0;
+            margin: 0 0 10px 0;
             text-transform: uppercase;
             letter-spacing: 6px;
             text-align: center;
             font-family: 'Syncopate', sans-serif;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
         }
 
         #countdown-display {
             font-size: 2.4rem; 
             font-weight: bold;
             text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .unit {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #666;
-            margin-right: 10px;
-        }
+        .unit { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-right: 10px; }
+        span { color: #000; border-bottom: 2px solid #2c2c2c; padding: 0 5px; }
 
-        span {
-            color: #000;
-            border-bottom: 2px solid #2c2c2c;
-            padding: 0 5px;
+        /* --- Video Player --- */
+        video {
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-top: 20px;
         }
 
         #fullscreen-btn {
@@ -73,14 +79,11 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 10px 15px;
             border-radius: 8px;
-            font-family: 'Montserrat', sans-serif;
             font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
             cursor: pointer;
             backdrop-filter: blur(5px);
             z-index: 100;
-            -webkit-appearance: none; /* Fixes iPhone button styling */
         }
 
         @media screen and (orientation: portrait) {
@@ -93,14 +96,13 @@
                 align-items: center;
                 justify-content: center;
                 z-index: 1000;
-                color: #2c2c2c;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="countdown-section">
         <h1>Counting down...</h1>
         <div id="countdown-display">
             <span id="days">00</span><span class="unit">Days</span> 
@@ -110,57 +112,59 @@
         </div>
     </div>
 
+    <div id="celebration">
+        <h2>HAPPY BIRTHDAY!</h2>
+        <video id="bday-video" controls>
+            <source src="bday-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
     <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
 
     <script>
-        const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
+        const birthdayDate = new Date("2026-01-10T00:00:00").getTime();
 
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
-            const doc = window.document;
-            const docEl = doc.documentElement;
-
-            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-            if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-                // iPhone Safari fix: We must use the webkit prefix explicitly
-                if (requestFullScreen) {
-                    requestFullScreen.call(docEl);
-                    btn.innerHTML = "Minimize";
-                } else {
-                    // Fallback for iPhones that don't support Fullscreen API on elements
-                    alert("On iPhone, tap the 'AA' menu in the URL bar and select 'Hide Toolbar' for the best view!");
-                }
+            const docEl = document.documentElement;
+            if(!document.fullscreenElement && !document.webkitFullscreenElement) {
+                if (docEl.requestFullscreen) docEl.requestFullscreen();
+                else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
+                btn.innerHTML = "Minimize";
             } else {
-                if (cancelFullScreen) {
-                    cancelFullScreen.call(doc);
-                    btn.innerHTML = "Maximize";
-                }
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                btn.innerHTML = "Maximize";
             }
         }
 
-        function formatTime(time) {
-            return time < 10 ? "0" + time : time;
-        }
+        function formatTime(time) { return time < 10 ? "0" + time : time; }
 
-        setInterval(function() {
+        const timer = setInterval(function() {
             const now = new Date().getTime();
             const distance = birthdayDate - now;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if (distance < 0) {
+                clearInterval(timer);
+                // Switch States
+                document.getElementById("countdown-section").style.display = "none";
+                document.getElementById("celebration").style.display = "flex";
+                
+                // Optional: Auto-play the video (Note: Browsers might block auto-play with sound)
+                // document.getElementById("bday-video").play();
+                return;
+            }
+
+            const days = Math.floor(distance / 86400000);
+            const hours = Math.floor((distance % 86400000) / 3600000);
+            const minutes = Math.floor((distance % 3600000) / 60000);
+            const seconds = Math.floor((distance % 60000) / 1000);
 
             document.getElementById("days").innerHTML = formatTime(days);
             document.getElementById("hours").innerHTML = formatTime(hours);
             document.getElementById("minutes").innerHTML = formatTime(minutes);
             document.getElementById("seconds").innerHTML = formatTime(seconds);
-
-            if (distance < 0) {
-                document.getElementById("countdown-display").innerHTML = "HAPPY BIRTHDAY!";
-            }
         }, 1000);
     </script>
 </body>
