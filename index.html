@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Birthday Countdown</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-image: url('your-bg-image.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f5f5dc; 
+            color: #2c2c2c; 
+            /* Switched to a more professional font */
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Moved 5% higher as requested */
+            margin-top: -63vh; 
+        }
+
+        h1 {
+            font-size: 1.8rem; 
+            color: #4a4a4a;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            /* Increased spacing for a 'luxury' look */
+            letter-spacing: 6px;
+            text-align: center;
+            font-family: 'Syncopate', sans-serif;
+        }
+
+        #countdown-display {
+            font-size: 2.4rem; 
+            font-weight: bold;
+            text-align: center;
+            /* Adds a very subtle 'lift' from the background */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .unit {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+            margin-right: 10px;
+        }
+
+        span {
+            color: #000;
+            /* Adding a slight 'border' effect to the numbers */
+            border-bottom: 2px solid #2c2c2c;
+            padding: 0 5px;
+        }
+
+        @media screen and (orientation: portrait) {
+            body::after {
+                content: "Please rotate your phone to Landscape";
+                position: absolute;
+                background: #f5f5dc;
+                top: 0; left: 0; right: 0; bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10;
+                color: #2c2c2c;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Counting down...</h1>
+        <div id="countdown-display">
+            <span id="days">00</span><span class="unit">Days</span> 
+            <span id="hours">00</span><span class="unit">Hours</span> 
+            <span id="minutes">00</span><span class="unit">Minutes</span> 
+            <span id="seconds">00</span><span class="unit">Seconds</span>
+        </div>
+    </div>
+
+    <script>
+        // Target date remains April 10th
+        const birthdayDate = new Date("April 10, 2026 00:00:00").getTime();
+
+        function formatTime(time) {
+            return time < 10 ? "0" + time : time;
+        }
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = birthdayDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = formatTime(days);
+            document.getElementById("hours").innerHTML = formatTime(hours);
+            document.getElementById("minutes").innerHTML = formatTime(minutes);
+            document.getElementById("seconds").innerHTML = formatTime(seconds);
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("countdown-display").innerHTML = "HAPPY BIRTHDAY!";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
