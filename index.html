@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Birthday Countdown</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     
     <style>
         body {
-            /* Fixed: Now pointing to your collage file */
-            background-image: url('Untitled design.jpg'); 
+            background-image: url('your-bg-image.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -23,13 +22,14 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
+            /* Helps with iPhone notch/home bar area */
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
 
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Maintained your -63vh positioning */
             margin-top: -63vh; 
         }
 
@@ -64,28 +64,23 @@
             padding: 0 5px;
         }
 
-        /* --- Small Translucent Toggle Button in bottom right --- */
         #fullscreen-btn {
             position: fixed;
-            bottom: 15px;
-            right: 15px;
-            background: rgba(44, 44, 44, 0.3); /* Translucent */
+            bottom: 20px;
+            right: 20px;
+            background: rgba(44, 44, 44, 0.3);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 12px;
+            padding: 10px 15px;
             border-radius: 8px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
-            backdrop-filter: blur(3px); /* Glass effect */
+            backdrop-filter: blur(5px);
             z-index: 100;
-            transition: 0.3s;
-        }
-
-        #fullscreen-btn:active {
-            background: rgba(44, 44, 44, 0.6);
+            -webkit-appearance: none; /* Fixes iPhone button styling */
         }
 
         @media screen and (orientation: portrait) {
@@ -118,28 +113,30 @@
     <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
 
     <script>
-        // Target: April 10, 2026
         const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
 
-        /* Fullscreen Toggle Logic for mobile browsers */
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
-            
-            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                const elem = document.documentElement;
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) {
-                    elem.webkitRequestFullscreen();
+            const doc = window.document;
+            const docEl = doc.documentElement;
+
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+            if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                // iPhone Safari fix: We must use the webkit prefix explicitly
+                if (requestFullScreen) {
+                    requestFullScreen.call(docEl);
+                    btn.innerHTML = "Minimize";
+                } else {
+                    // Fallback for iPhones that don't support Fullscreen API on elements
+                    alert("On iPhone, tap the 'AA' menu in the URL bar and select 'Hide Toolbar' for the best view!");
                 }
-                btn.innerHTML = "Minimize";
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
+                if (cancelFullScreen) {
+                    cancelFullScreen.call(doc);
+                    btn.innerHTML = "Maximize";
                 }
-                btn.innerHTML = "Maximize";
             }
         }
 
@@ -147,7 +144,7 @@
             return time < 10 ? "0" + time : time;
         }
 
-        const timer = setInterval(function() {
+        setInterval(function() {
             const now = new Date().getTime();
             const distance = birthdayDate - now;
 
@@ -162,7 +159,6 @@
             document.getElementById("seconds").innerHTML = formatTime(seconds);
 
             if (distance < 0) {
-                clearInterval(timer);
                 document.getElementById("countdown-display").innerHTML = "HAPPY BIRTHDAY!";
             }
         }, 1000);
