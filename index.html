@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Birthday Countdown</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
         body {
@@ -24,22 +25,16 @@
             overflow: hidden;
         }
 
-        /* --- Countdown Container --- */
-        .container {
+        /* Consistent Positioning for Countdown and Birthday Text */
+        .container, #celebration {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: -63vh; 
-        }
-
-        /* --- Celebration Container (Hidden at start) --- */
-        #celebration {
-            display: none; /* Stays hidden until timer hits 0 */
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            margin-top: -63vh; /* Exact same height as your countdown */
             width: 100%;
         }
+
+        #celebration { display: none; }
 
         h1, h2 {
             font-size: 1.8rem; 
@@ -49,25 +44,31 @@
             letter-spacing: 6px;
             text-align: center;
             font-family: 'Syncopate', sans-serif;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+            /* Added glow to make it more "fun" */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 2px 2px 4px rgba(0,0,0,0.2);
         }
 
-        #countdown-display {
-            font-size: 2.4rem; 
-            font-weight: bold;
-            text-align: center;
-        }
-
+        #countdown-display { font-size: 2.4rem; font-weight: bold; text-align: center; }
         .unit { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-right: 10px; }
         span { color: #000; border-bottom: 2px solid #2c2c2c; padding: 0 5px; }
 
-        /* --- Video Player --- */
-        video {
-            width: 80%;
-            max-width: 600px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /* Cinematic 16:9 Video Player */
+        .video-wrapper {
+            width: 70%;
+            max-width: 800px;
+            aspect-ratio: 16 / 9; /* Cinematic ratio */
             margin-top: 20px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         #fullscreen-btn {
@@ -114,16 +115,17 @@
 
     <div id="celebration">
         <h2>HAPPY BIRTHDAY!</h2>
-        <video id="bday-video" controls>
-            <source src="bday-video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+        <div class="video-wrapper">
+            <video id="bday-video" controls>
+                <source src="bday-video.mp4" type="video/mp4">
+            </video>
+        </div>
     </div>
 
     <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
 
     <script>
-        const birthdayDate = new Date("2026-01-10T00:00:00").getTime();
+        const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
 
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
@@ -139,7 +141,15 @@
             }
         }
 
-        function formatTime(time) { return time < 10 ? "0" + time : time; }
+        function launchConfetti() {
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
 
         const timer = setInterval(function() {
             const now = new Date().getTime();
@@ -147,12 +157,9 @@
 
             if (distance < 0) {
                 clearInterval(timer);
-                // Switch States
                 document.getElementById("countdown-section").style.display = "none";
                 document.getElementById("celebration").style.display = "flex";
-                
-                // Optional: Auto-play the video (Note: Browsers might block auto-play with sound)
-                // document.getElementById("bday-video").play();
+                launchConfetti(); // Starts the party!
                 return;
             }
 
@@ -161,10 +168,10 @@
             const minutes = Math.floor((distance % 3600000) / 60000);
             const seconds = Math.floor((distance % 60000) / 1000);
 
-            document.getElementById("days").innerHTML = formatTime(days);
-            document.getElementById("hours").innerHTML = formatTime(hours);
-            document.getElementById("minutes").innerHTML = formatTime(minutes);
-            document.getElementById("seconds").innerHTML = formatTime(seconds);
+            document.getElementById("days").innerHTML = (days < 10 ? "0"+days : days);
+            document.getElementById("hours").innerHTML = (hours < 10 ? "0"+hours : hours);
+            document.getElementById("minutes").innerHTML = (minutes < 10 ? "0"+minutes : minutes);
+            document.getElementById("seconds").innerHTML = (seconds < 10 ? "0"+seconds : seconds);
         }, 1000);
     </script>
 </body>
