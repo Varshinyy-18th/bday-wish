@@ -8,13 +8,13 @@
     
     <style>
         body {
-            background-image: url('your-bg-image.jpg'); 
+            /* Using your collage background */
+            background-image: url('Untitled design.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-color: #f5f5dc; 
             color: #2c2c2c; 
-            /* Switched to a more professional font */
             font-family: 'Montserrat', sans-serif;
             display: flex;
             flex-direction: column;
@@ -29,7 +29,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Moved 5% higher as requested */
+            /* Maintained your -63vh positioning */
             margin-top: -63vh; 
         }
 
@@ -38,7 +38,6 @@
             color: #4a4a4a;
             margin: 0 0 5px 0;
             text-transform: uppercase;
-            /* Increased spacing for a 'luxury' look */
             letter-spacing: 6px;
             text-align: center;
             font-family: 'Syncopate', sans-serif;
@@ -48,7 +47,6 @@
             font-size: 2.4rem; 
             font-weight: bold;
             text-align: center;
-            /* Adds a very subtle 'lift' from the background */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
@@ -62,9 +60,32 @@
 
         span {
             color: #000;
-            /* Adding a slight 'border' effect to the numbers */
             border-bottom: 2px solid #2c2c2c;
             padding: 0 5px;
+        }
+
+        /* --- Small Translucent Toggle Button --- */
+        #fullscreen-btn {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(44, 44, 44, 0.3); /* Translucent */
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            backdrop-filter: blur(3px); /* Glass effect */
+            z-index: 100;
+            transition: 0.3s;
+        }
+
+        #fullscreen-btn:active {
+            background: rgba(44, 44, 44, 0.6);
         }
 
         @media screen and (orientation: portrait) {
@@ -76,7 +97,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                z-index: 10;
+                z-index: 1000;
                 color: #2c2c2c;
             }
         }
@@ -94,9 +115,35 @@
         </div>
     </div>
 
+    <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
+
     <script>
-        // Target date remains April 10th
-        const birthdayDate = new Date("April 10, 2026 00:00:00").getTime();
+        // Target: April 10, 2026
+        const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
+
+        /* Fullscreen Toggle Logic */
+        function toggleFullscreen() {
+            const btn = document.getElementById('fullscreen-btn');
+            
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                // Enter Fullscreen
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                }
+                btn.innerHTML = "Minimize";
+            } else {
+                // Exit Fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+                btn.innerHTML = "Maximize";
+            }
+        }
 
         function formatTime(time) {
             return time < 10 ? "0" + time : time;
