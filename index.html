@@ -8,8 +8,8 @@
     
     <style>
         body {
-            /* Using your collage background */
-            background-image: url('your-bg-image.jpg'); 
+            /* Fixed: Now pointing to your collage file */
+            background-image: url('Untitled design.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -64,7 +64,7 @@
             padding: 0 5px;
         }
 
-        /* --- Small Translucent Toggle Button --- */
+        /* --- Small Translucent Toggle Button in bottom right --- */
         #fullscreen-btn {
             position: fixed;
             bottom: 15px;
@@ -121,12 +121,11 @@
         // Target: April 10, 2026
         const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
 
-        /* Fullscreen Toggle Logic */
+        /* Fullscreen Toggle Logic for mobile browsers */
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
             
             if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                // Enter Fullscreen
                 const elem = document.documentElement;
                 if (elem.requestFullscreen) {
                     elem.requestFullscreen();
@@ -135,7 +134,6 @@
                 }
                 btn.innerHTML = "Minimize";
             } else {
-                // Exit Fullscreen
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 } else if (document.webkitExitFullscreen) {
@@ -171,5 +169,3 @@
     </script>
 </body>
 </html>
-
-
