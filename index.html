@@ -32,19 +32,29 @@
             margin-top: -63vh; 
             width: 100%;
         }
+ 
+        /* Animated "Happy Birthday" Text */
+#celebration h2 {
+    font-size: 3rem; /* Larger for more impact */
+    font-family: 'Syncopate', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    margin-bottom: 20px;
+    
+    /* Animated Gradient Effect */
+    background: linear-gradient(90deg, #4a4a4a, #ff6b6b, #4a4a4a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+    
+    /* Soft Glow */
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+}
 
-        #celebration { display: none; }
-
-        h1, h2 {
-            font-size: 1.8rem; 
-            color: #4a4a4a;
-            margin: 0 0 10px 0;
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            text-align: center;
-            font-family: 'Syncopate', sans-serif;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 2px 2px 4px rgba(0,0,0,0.2);
-        }
+@keyframes shine {
+    to { background-position: 200% center; }
+}       
 
         #countdown-display { font-size: 2.4rem; font-weight: bold; text-align: center; }
         .unit { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-right: 10px; }
@@ -178,4 +188,5 @@
     </script>
 </body>
 </html>
+
 
