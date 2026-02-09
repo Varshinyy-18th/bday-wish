@@ -9,6 +9,7 @@
     
     <style>
         body {
+            /* Background matches your collage file exactly */
             background-image: url('Untitled design.jpg'); 
             background-size: cover;
             background-position: center;
@@ -25,16 +26,14 @@
             overflow: hidden;
         }
 
-        /* Grouping both sections to keep the text in the same high spot */
-        .container, #celebration {
+        /* --- Countdown Container --- */
+        .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: -63vh; 
+            margin-top: -63vh; /* Your preferred high positioning */
             width: 100%;
         }
-
-        #celebration { display: none; }
 
         h1 {
             font-size: 1.8rem; 
@@ -46,36 +45,49 @@
             font-family: 'Syncopate', sans-serif;
         }
 
-        /* Animated Fun Birthday Text */
-        h2 {
-            font-size: 3rem; 
+        #countdown-display { font-size: 2.4rem; font-weight: bold; text-align: center; }
+        .unit { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-right: 10px; }
+        span { color: #000; border-bottom: 2px solid #2c2c2c; padding: 0 5px; }
+
+        /* --- Celebration Screen (Text + Video) --- */
+        #celebration {
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+        }
+
+        #celebration h2 {
+            font-size: 3.5rem; 
             font-family: 'Syncopate', sans-serif;
             text-transform: uppercase;
             letter-spacing: 10px;
             text-align: center;
-            margin: 0;
+            margin-top: 15vh; /* Places text in the upper third of the screen */
+            
+            /* Animated Shine Effect */
             background: linear-gradient(90deg, #4a4a4a, #ff6b6b, #ffcc33, #4a4a4a);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: shine 3s linear infinite;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
         }
 
         @keyframes shine {
             to { background-position: 200% center; }
         }
 
-        #countdown-display { font-size: 2.4rem; font-weight: bold; text-align: center; }
-        .unit { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-right: 10px; }
-        span { color: #000; border-bottom: 2px solid #2c2c2c; padding: 0 5px; }
-
         /* Video Player: 30% Smaller and 40% Lower */
         .video-wrapper {
             width: 40%; 
             max-width: 500px;
             aspect-ratio: 16 / 9; 
-            margin-top: 65vh; 
+            margin-top: 15vh; /* This pushes it below the text */
             position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             border-radius: 12px;
@@ -85,6 +97,7 @@
 
         video { width: 100%; height: 100%; object-fit: cover; }
 
+        /* Fullscreen Toggle */
         #fullscreen-btn {
             position: fixed;
             bottom: 15px;
@@ -140,8 +153,8 @@
     <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
 
     <script>
-        // Target: April 10, 2026
-        const birthdayDate = new Date("2026-01-10T00:00:00").getTime();
+        // Set your target date here
+        const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
 
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
@@ -192,4 +205,3 @@
     </script>
 </body>
 </html>
-
