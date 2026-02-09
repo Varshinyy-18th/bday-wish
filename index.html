@@ -25,6 +25,7 @@
             overflow: hidden;
         }
 
+        /* Grouping both sections to keep the text in the same high spot */
         .container, #celebration {
             display: flex;
             flex-direction: column;
@@ -32,41 +33,48 @@
             margin-top: -63vh; 
             width: 100%;
         }
- 
-        /* Animated "Happy Birthday" Text */
-#celebration h2 {
-    font-size: 3rem; /* Larger for more impact */
-    font-family: 'Syncopate', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 10px;
-    margin-bottom: 20px;
-    
-    /* Animated Gradient Effect */
-    background: linear-gradient(90deg, #4a4a4a, #ff6b6b, #4a4a4a);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 3s linear infinite;
-    
-    /* Soft Glow */
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
-}
 
-@keyframes shine {
-    to { background-position: 200% center; }
-}       
+        #celebration { display: none; }
+
+        h1 {
+            font-size: 1.8rem; 
+            color: #4a4a4a;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            text-align: center;
+            font-family: 'Syncopate', sans-serif;
+        }
+
+        /* Animated Fun Birthday Text */
+        h2 {
+            font-size: 3rem; 
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            text-align: center;
+            margin: 0;
+            background: linear-gradient(90deg, #4a4a4a, #ff6b6b, #ffcc33, #4a4a4a);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
 
         #countdown-display { font-size: 2.4rem; font-weight: bold; text-align: center; }
         .unit { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-right: 10px; }
         span { color: #000; border-bottom: 2px solid #2c2c2c; padding: 0 5px; }
 
-        /* Cinematic 16:9 Video Player - 30% Smaller and 40% Lower than previous */
+        /* Video Player: 30% Smaller and 40% Lower */
         .video-wrapper {
-            /* Width reduced to 40% for a cleaner, smaller look */
             width: 40%; 
             max-width: 500px;
             aspect-ratio: 16 / 9; 
-            /* Margin increased to 65vh to move it very low */
             margin-top: 65vh; 
             position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
@@ -75,25 +83,21 @@
             background: #000;
         }
 
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        video { width: 100%; height: 100%; object-fit: cover; }
 
         #fullscreen-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 15px;
+            right: 15px;
             background: rgba(44, 44, 44, 0.3);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 10px 15px;
+            padding: 8px 12px;
             border-radius: 8px;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
             cursor: pointer;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(3px);
             z-index: 100;
         }
 
@@ -124,20 +128,20 @@
         </div>
     </div>
 
-   <div id="celebration">
-    <h2>Happy Birthday!</h2>
-    <div class="video-wrapper">
-        <video id="bday-video" controls>
-            <source src="bday-video.mp4" type="video/mp4">
-        </video>
+    <div id="celebration">
+        <h2>Happy Birthday!</h2>
+        <div class="video-wrapper">
+            <video id="bday-video" controls>
+                <source src="bday-video.mp4" type="video/mp4">
+            </video>
+        </div>
     </div>
-</div>
 
     <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
 
     <script>
         // Target: April 10, 2026
-        const birthdayDate = new Date("2026-01-10T00:00:00").getTime();
+        const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
 
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
@@ -188,6 +192,3 @@
     </script>
 </body>
 </html>
-
-
-
