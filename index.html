@@ -9,8 +9,8 @@
     
     <style>
         body {
-            /* Updated to your new collage background */
-            background-image: url('download.jpg'); 
+            /* Starts with your first background */
+            background-image: url('your-bg-image.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -24,6 +24,7 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
+            transition: background-image 0.5s ease-in-out; /* Smooth fade between images */
         }
 
         /* --- Countdown Container --- */
@@ -78,13 +79,12 @@
 
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* --- TV Frame Video Wrapper --- */
+        /* TV Frame Video Wrapper positioned for 'download.jpg' */
         .video-wrapper {
-            /* These settings help the video sit inside the TV frame */
             width: 28.5%; 
-            aspect-ratio: 4 / 3; /* Matches the classic TV shape */
+            aspect-ratio: 4 / 3; 
             margin-top: 13.5vh; 
-            margin-left: -5.5%; /* Off-center to match the TV position in the image */
+            margin-left: -5.5%; 
             position: relative;
             overflow: hidden;
             background: #000;
@@ -148,7 +148,8 @@
     <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
 
     <script>
-        const birthdayDate = new Date("2026-04-11T00:01:00").getTime();
+        // Set your target date here
+        const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
 
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
@@ -180,8 +181,14 @@
 
             if (distance < 0) {
                 clearInterval(timer);
+                
+                // 1. Swap the Background Image to 'download.jpg'
+                document.body.style.backgroundImage = "url('download.jpg')";
+                
+                // 2. Hide countdown and show celebration
                 document.getElementById("countdown-section").style.display = "none";
                 document.getElementById("celebration").style.display = "flex";
+                
                 launchConfetti(); 
                 return;
             }
@@ -199,4 +206,3 @@
     </script>
 </body>
 </html>
-
