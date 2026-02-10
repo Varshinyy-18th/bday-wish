@@ -9,7 +9,6 @@
     
     <style>
         body {
-            /* Initial background */
             background-image: url('your-bg-image.jpg'); 
             background-size: cover;
             background-position: center;
@@ -27,7 +26,6 @@
             transition: background-image 0.8s ease-in-out; 
         }
 
-        /* --- Countdown Container --- */
         .container {
             display: flex;
             flex-direction: column;
@@ -50,7 +48,6 @@
         .unit { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-right: 10px; }
         span { color: #000; border-bottom: 2px solid #2c2c2c; padding: 0 5px; }
 
-        /* --- Celebration Screen --- */
         #celebration {
             display: none; 
             flex-direction: column;
@@ -63,13 +60,13 @@
         }
 
         #celebration h2 {
-            /* Reduced size by 15% (3.5rem down to 3rem) */
             font-size: 3rem; 
             font-family: 'Syncopate', sans-serif;
             text-transform: uppercase;
             letter-spacing: 10px;
             text-align: center;
-            margin-top: 10vh; 
+            /* Moved 10% higher (from 10vh to 5vh) */
+            margin-top: 5vh; 
             
             background: linear-gradient(90deg, #4a4a4a, #ff6b6b, #ffcc33, #4a4a4a);
             background-size: 200% auto;
@@ -81,14 +78,12 @@
 
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Video Wrapper: 10% smaller and moved 5% right */
         .video-wrapper {
-            /* Width reduced by 10% (40% down to 36%) */
-            width: 36%; 
+            /* Width reduced by 10% (from 36% to 32.4%) */
+            width: 32.4%; 
             max-width: 450px;
             aspect-ratio: 16 / 9; 
             margin-top: 5vh; 
-            /* Moved 5% to the right */
             margin-left: 5%; 
             position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
@@ -154,10 +149,8 @@
     <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
 
     <script>
-        // TARGET DATE
-        const birthdayDate = new Date("2026-01-10T00:00:00").getTime();
+        const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
 
-        // Pre-load the second background image
         const preLoadImg = new Image();
         preLoadImg.src = "download.jpg";
 
@@ -191,13 +184,9 @@
 
             if (distance < 0) {
                 clearInterval(timer);
-                
-                // Swap Background to 'download.jpg'
                 document.body.style.backgroundImage = "url('download.jpg')";
-                
                 document.getElementById("countdown-section").style.display = "none";
                 document.getElementById("celebration").style.display = "flex";
-                
                 launchConfetti(); 
                 return;
             }
@@ -215,4 +204,3 @@
     </script>
 </body>
 </html>
-
