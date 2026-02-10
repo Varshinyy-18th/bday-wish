@@ -9,7 +9,7 @@
     
     <style>
         body {
-            /* Starts with your first background */
+            /* Initial background for the countdown */
             background-image: url('your-bg-image.jpg'); 
             background-size: cover;
             background-position: center;
@@ -24,7 +24,7 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            transition: background-image 0.5s ease-in-out; /* Smooth fade between images */
+            transition: background-image 0.8s ease-in-out; /* Smooth fade when the background swaps */
         }
 
         /* --- Countdown Container --- */
@@ -50,7 +50,7 @@
         .unit { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-right: 10px; }
         span { color: #000; border-bottom: 2px solid #2c2c2c; padding: 0 5px; }
 
-        /* --- Celebration Screen --- */
+        /* --- Celebration Screen (Text + Video) --- */
         #celebration {
             display: none; 
             flex-direction: column;
@@ -63,12 +63,14 @@
         }
 
         #celebration h2 {
-            font-size: 3rem; 
+            font-size: 3.5rem; 
             font-family: 'Syncopate', sans-serif;
             text-transform: uppercase;
             letter-spacing: 10px;
             text-align: center;
-            margin-top: 5vh; 
+            margin-top: 10vh; 
+            
+            /* Animated Shine Effect */
             background: linear-gradient(90deg, #4a4a4a, #ff6b6b, #ffcc33, #4a4a4a);
             background-size: 200% auto;
             -webkit-background-clip: text;
@@ -79,16 +81,17 @@
 
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* TV Frame Video Wrapper positioned for 'download.jpg' */
+        /* Video Wrapper: Positioned to fit the TV in 'download.jpg' */
         .video-wrapper {
             width: 28.5%; 
             aspect-ratio: 4 / 3; 
-            margin-top: 13.5vh; 
+            margin-top: 5vh; 
             margin-left: -5.5%; 
             position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-radius: 5px;
             overflow: hidden;
             background: #000;
-            border-radius: 5px;
         }
 
         video { width: 100%; height: 100%; object-fit: cover; }
@@ -148,8 +151,12 @@
     <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
 
     <script>
-        // Set your target date here
+        // TARGET DATE
         const birthdayDate = new Date("2026-01-10T00:00:00").getTime();
+
+        // PRE-LOAD the second image to prevent the "white screen" glitch
+        const preLoadImg = new Image();
+        preLoadImg.src = "download.jpg";
 
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
@@ -182,7 +189,7 @@
             if (distance < 0) {
                 clearInterval(timer);
                 
-                // 1. Swap the Background Image to 'download.jpg'
+                // 1. Swap background image immediately
                 document.body.style.backgroundImage = "url('download.jpg')";
                 
                 // 2. Hide countdown and show celebration
@@ -206,4 +213,3 @@
     </script>
 </body>
 </html>
-
