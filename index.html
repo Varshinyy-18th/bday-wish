@@ -65,7 +65,6 @@
             text-transform: uppercase;
             letter-spacing: 10px;
             text-align: center;
-            /* Moved 10% higher (from 10vh to 5vh) */
             margin-top: 5vh; 
             
             background: linear-gradient(90deg, #4a4a4a, #ff6b6b, #ffcc33, #4a4a4a);
@@ -79,12 +78,13 @@
         @keyframes shine { to { background-position: 200% center; } }
 
         .video-wrapper {
-            /* Width reduced by 10% (from 36% to 32.4%) */
             width: 28%; 
             max-width: 450px;
             aspect-ratio: 16 / 9; 
-            margin-top: 5vh; 
-            margin-left: 5%; 
+            /* Moved 20% further down (from 5vh to 25vh) */
+            margin-top: 25vh; 
+            /* Moved 20% to the left (from 5% to -15%) */
+            margin-left: -15%; 
             position: relative;
             box-shadow: 0 30px 50px rgba(0,0,0,0.3);
             border-radius: 12px;
@@ -204,7 +204,3 @@
     </script>
 </body>
 </html>
-
-
-
-
