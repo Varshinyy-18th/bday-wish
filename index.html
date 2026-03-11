@@ -76,23 +76,37 @@
 
         @keyframes shine { to { background-position: 200% center; } }
 
-       .video-wrapper {
+        .video-wrapper {
             position: absolute;
-            top: 47.5%;         /* Adjust these as we did before */
+            top: 47.5%;         
             left: 48.5%;          
-            width: 27%;       /* Slightly wider to cover the edges */
+            width: 27%;       
             height: 36%;      
-    
             transform: translate(-50%, -50%); 
             z-index: 10;
             overflow: hidden;
-
-        iframe { width: 100%; height: 100%; border: none; }
+            background: transparent;
         }
-        #fullscreen-btn {
+
+        .video-wrapper iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            object-fit: cover;
+        }
+
+        /* Container for bottom-right buttons */
+        .controls-group {
             position: fixed;
             bottom: 15px;
             right: 15px;
+            display: flex;
+            gap: 10px; /* Space between buttons */
+            z-index: 100;
+        }
+
+        /* Shared style for both buttons */
+        #fullscreen-btn, #next-page-btn {
             background: rgba(44, 44, 44, 0.3);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -102,7 +116,12 @@
             text-transform: uppercase;
             cursor: pointer;
             backdrop-filter: blur(3px);
-            z-index: 100;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Next button stays hidden until celebration starts */
+        #next-page-btn {
+            display: none;
         }
 
         @media screen and (orientation: portrait) {
@@ -134,11 +153,13 @@
 
     <div id="celebration">
         <h2>Happy Birthday!</h2>
-        <div class="video-wrapper" id="yt-player-container">
-            </div>
+        <div class="video-wrapper" id="yt-player-container"></div>
     </div>
 
-    <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
+    <div class="controls-group">
+        <button id="next-page-btn" onclick="goToNextPage()">Next Surprise</button>
+        <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
+    </div>
 
     <script>
         const YOUTUBE_VIDEO_ID = 'DlC4936DxXc';
@@ -161,6 +182,11 @@
             }
         }
 
+        function goToNextPage() {
+            // Change this to your actual file name
+            window.location.href = "surprise2.html"; 
+        }
+
         function launchConfetti() {
             var duration = 5 * 1000;
             var end = Date.now() + duration;
@@ -181,7 +207,9 @@
                 document.getElementById("countdown-section").style.display = "none";
                 document.getElementById("celebration").style.display = "flex";
                 
-                // FIXED: This line actually puts the video into your container
+                // Show the next page button when celebration starts
+                document.getElementById("next-page-btn").style.display = "block";
+
                 document.getElementById("yt-player-container").innerHTML = `
                     <iframe src="https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0" 
                     allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
@@ -203,26 +231,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
