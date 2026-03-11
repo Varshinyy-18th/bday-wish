@@ -22,22 +22,45 @@
             justify-content: center; 
             height: 100vh;
             margin: 0;
+            padding: 0;
             overflow: hidden;
             transition: background-image 0.8s ease-in-out; 
+        }
+
+        /* Overlay to ensure user interaction so audio works */
+        #interaction-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #f5f5dc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        #start-btn {
+            padding: 20px 40px;
+            font-family: 'Syncopate', sans-serif;
+            background: #2c2c2c;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            letter-spacing: 2px;
         }
 
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: -63vh; 
+            margin-top: -10vh; 
             width: 100%;
         }
 
         h1 {
             font-size: 1.8rem; 
             color: #4a4a4a;
-            margin: 0 0 5px 0;
+            margin: 0 0 20px 0;
             text-transform: uppercase;
             letter-spacing: 6px;
             text-align: center;
@@ -52,7 +75,7 @@
             display: none; 
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             width: 100%;
             height: 100vh;
             position: absolute;
@@ -65,26 +88,20 @@
             text-transform: uppercase;
             letter-spacing: 10px;
             text-align: center;
-            margin-top: 5vh; 
-            
+            margin-bottom: 30px;
             background: linear-gradient(90deg, #4a4a4a, #ff6b6b, #ffcc33, #4a4a4a);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: shine 3s linear infinite;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
         }
 
         @keyframes shine { to { background-position: 200% center; } }
 
         .video-wrapper {
-            width: 25%; 
-            max-width: 450px;
-            height: 35vh;
-            /* Moved 20% further down (from 5vh to 25vh) */
-            margin-top: 12vh; 
-            /* Moved 20% to the left (from 5% to -15%) */
-            margin-left: -3%; 
+            width: 80%; 
+            max-width: 700px;
+            aspect-ratio: 16/9;
             position: relative;
             box-shadow: 0 30px 50px rgba(0,0,0,0.3);
             border-radius: 12px;
@@ -92,7 +109,7 @@
             background: #000;
         }
 
-        video { width: 100%; height: 100%; object-fit: cover; }
+        video { width: 100%; height: 100%; object-fit: contain; }
 
         #fullscreen-btn {
             position: fixed;
@@ -111,21 +128,31 @@
         }
 
         @media screen and (orientation: portrait) {
-            body::after {
-                content: "Please rotate your phone to Landscape";
-                position: absolute;
+            #portrait-warning {
+                position: fixed;
+                top: 0; left: 0; width: 100%; height: 100%;
                 background: #f5f5dc;
-                top: 0; left: 0; right: 0; bottom: 0;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                z-index: 1000;
-                color: #2c2c2c;
+                z-index: 3000;
+                text-align: center;
+                padding: 20px;
             }
+        }
+        
+        @media screen and (orientation: landscape) {
+            #portrait-warning { display: none; }
         }
     </style>
 </head>
 <body>
+
+    <div id="portrait-warning">Please rotate your phone to Landscape mode</div>
+
+    <div id="interaction-overlay">
+        <button id="start-btn" onclick="startExperience()">Start Surprise</button>
+    </div>
 
     <div class="container" id="countdown-section">
         <h1>Counting down...</h1>
@@ -140,7 +167,7 @@
     <div id="celebration">
         <h2>Happy Birthday!</h2>
         <div class="video-wrapper">
-            <video id="bday-video" controls>
+            <video id="bday-video" controls playsinline>
                 <source src="https://drive.google.com/uc?export=download&id=13Zy2-Ke6KkIndiVr5hlQ_e8BfzCEx1Ip" type="video/mp4">
             </video>
         </div>
@@ -149,10 +176,15 @@
     <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
 
     <script>
-        const birthdayDate = new Date("2026-01-10T00:00:00").getTime();
+        // TARGET DATE
+        const birthdayDate = new Date("2026-04-10T00:00:00").getTime();
+        const bdayVideo = document.getElementById('bday-video');
 
-        const preLoadImg = new Image();
-        preLoadImg.src = "download.jpg";
+        function startExperience() {
+            document.getElementById('interaction-overlay').style.display = 'none';
+            // Pre-load video for smoother playback later
+            bdayVideo.load();
+        }
 
         function toggleFullscreen() {
             const btn = document.getElementById('fullscreen-btn');
@@ -169,7 +201,7 @@
         }
 
         function launchConfetti() {
-            var duration = 5 * 1000;
+            var duration = 10 * 1000;
             var end = Date.now() + duration;
             (function frame() {
                 confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
@@ -187,6 +219,9 @@
                 document.body.style.backgroundImage = "url('download.jpg')";
                 document.getElementById("countdown-section").style.display = "none";
                 document.getElementById("celebration").style.display = "flex";
+                
+                // Play the video
+                bdayVideo.play();
                 launchConfetti(); 
                 return;
             }
@@ -204,18 +239,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
