@@ -7,13 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
-            /* Initial Background (Same as first page) */
-            background-image: url('lockbg.jpg'); 
+            background-image: url('your-bg-image.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-color: #f5f5dc;
-            
             color: #2c2c2c;
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -21,25 +19,21 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden; /* Locked until password is entered */
-            
-            /* Smooth transition for background changes */
+            overflow: hidden; 
             transition: background 0.8s ease-in-out, background-color 0.8s ease-in-out;
         }
 
-        /* --- PASSWORD SCREEN (Glass Effect) --- */
+        /* --- PASSWORD SCREEN (Transparent & Lowered) --- */
         #lock-screen {
             text-align: center;
             z-index: 100;
             padding: 50px;
-            background: rgba(245, 245, 220, 0.7); /* Semi-transparent */
-            backdrop-filter: blur(12px); /* Frosted glass effect */
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            background: transparent; /* No background */
+            border: none;             /* No border */
+            box-shadow: none;         /* No shadow */
             max-width: 400px;
             width: 90%;
+            margin-top: 15vh;         /* Lowered by 15% of the viewport height */
         }
 
         #lock-screen h2 {
@@ -48,13 +42,14 @@
             text-transform: uppercase;
             font-size: 1.1rem;
             margin-bottom: 25px;
+            color: #2c2c2c; /* Ensure this is readable against your image */
         }
 
         #pass-input {
             padding: 15px;
             border: 2px solid #2c2c2c;
-            border-radius: 8px;
-            background: white;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.9); /* Slight white so the text inside is readable */
             font-size: 1rem;
             text-align: center;
             width: 80%;
@@ -67,21 +62,11 @@
             background: #2c2c2c;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: bold;
-            transition: transform 0.2s;
-        }
-
-        #unlock-btn:active { transform: scale(0.95); }
-
-        #error-msg {
-            color: #ff6b6b;
-            display: none;
-            font-size: 0.8rem;
-            margin-top: 15px;
         }
 
         /* --- SCROLLING CONTENT --- */
@@ -112,12 +97,6 @@
             border: 8px solid white;
             border-radius: 4px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
-        }
-
-        .photo-column img:hover {
-            transform: scale(1.1) rotate(0deg) !important;
-            z-index: 5;
         }
 
         .letter-column {
@@ -129,23 +108,27 @@
             background: white;
             padding: 60px;
             box-shadow: 0 10px 50px rgba(0,0,0,0.05);
-            line-height: 2;
-            color: #333;
             min-height: 1200px; 
             border-radius: 2px;
         }
 
-        .letter-paper h1 {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 1.4rem;
-            border-bottom: 2px solid #f5f5dc;
-            padding-bottom: 20px;
-            margin-bottom: 40px;
-        }
-
-        .signature {
-            margin-top: 60px;
-            font-weight: bold;
+        /* --- BACK BUTTON STYLE --- */
+        #back-btn {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(44, 44, 44, 0.3);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            backdrop-filter: blur(3px);
+            font-family: 'Montserrat', sans-serif;
+            z-index: 1000;
+            display: none; /* Hidden until unlocked */
         }
 
         @media (max-width: 900px) {
@@ -161,12 +144,11 @@
         <input type="password" id="pass-input" placeholder="Enter Secret Code">
         <br>
         <button id="unlock-btn" onclick="checkPassword()">Unlock</button>
-        <p id="error-msg">Incorrect key. Try again!</p>
+        <p id="error-msg" style="display:none; color:#ff6b6b; margin-top:15px;">Incorrect key.</p>
     </div>
 
     <div id="secret-content">
         <div class="scroll-container">
-            
             <div class="photo-column">
                 <img src="photo1.jpg" style="transform: rotate(-3deg);">
                 <img src="photo2.jpg" style="transform: rotate(2deg);">
@@ -176,20 +158,9 @@
 
             <div class="letter-column">
                 <div class="letter-paper">
-                    <h1>Happy 18th Birthday!</h1>
-                    <p>
-                        Yo! Finally, you're 18. Welcome to the world of legal adulthood, though let's be real—nothing is actually changing for us. We're still going to be the same chaotic developers.
-                    </p>
-                    <p>
-                        I wanted to make this second page a bit more personal. It's been a wild ride through school, and having a friend like you who actually gets my niche game dev jokes and glitches has made everything 10x better. 
-                    </p>
-                    <p>
-                        Scroll down to see some memories! [Keep typing to make the scroll longer...]
-                    </p>
-                    <div class="signature">
-                        Stay confused,<br>
-                        Arjun
-                    </div>
+                    <h1>Dearest Friend,</h1>
+                    <p>Welcome to the final surprise. [Type your message here!]</p>
+                    <div style="margin-top:60px; font-weight:bold;">Stay confused,<br>Arjun</div>
                 </div>
             </div>
 
@@ -199,36 +170,36 @@
                 <img src="photo7.jpg" style="transform: rotate(1deg);">
                 <img src="photo8.jpg" style="transform: rotate(-4deg);">
             </div>
-
         </div>
     </div>
+
+    <button id="back-btn" onclick="goBack()">Back to TV</button>
 
     <script>
         function checkPassword() {
             const input = document.getElementById('pass-input').value;
-            const secretKey = "YmlydGhkYXkyMDI2"; // Encoded "birthday2026"
+            const secretKey = "YmlydGhkYXkyMDI2"; 
 
             if (btoa(input) === secretKey) {
-                // 1. Hide the lock screen
                 document.getElementById('lock-screen').style.display = 'none';
-                
-                // 2. Change background with transition
                 document.body.style.backgroundImage = "none";
-                document.body.style.backgroundColor = "#fdfaf0"; // Paper beige
+                document.body.style.backgroundColor = "#fdfaf0"; 
                 
-                // 3. Show and fade in the content
                 const content = document.getElementById('secret-content');
                 content.style.display = 'block';
                 setTimeout(() => { content.style.opacity = '1'; }, 50);
                 
-                // 4. Enable scrolling
+                document.getElementById('back-btn').style.display = 'block';
                 document.body.style.overflow = "auto";
                 document.body.style.display = "block"; 
             } else {
                 document.getElementById('error-msg').style.display = 'block';
                 document.getElementById('pass-input').value = "";
-                document.getElementById('pass-input').style.borderColor = '#ff6b6b';
             }
+        }
+
+        function goBack() {
+            window.location.href = "index.html";
         }
 
         document.getElementById('pass-input').addEventListener('keypress', function (e) {
