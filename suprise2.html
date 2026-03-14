@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise - Part 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5dc;
+            color: #2c2c2c;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; /* Locked until password is entered */
+        }
+
+        /* --- PASSWORD SCREEN --- */
+        #lock-screen {
+            text-align: center;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        #lock-screen h2 {
+            font-family: 'Syncopate', sans-serif;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+        }
+
+        #pass-input {
+            padding: 15px;
+            border: 2px solid #2c2c2c;
+            border-radius: 8px;
+            background: transparent;
+            font-size: 1rem;
+            text-align: center;
+            width: 250px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #unlock-btn {
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: #2c2c2c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        #error-msg {
+            color: #ff6b6b;
+            display: none;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        /* --- SCROLLING CONTENT --- */
+        #secret-content {
+            display: none;
+            width: 100%;
+        }
+
+        .scroll-container {
+            display: flex;
+            justify-content: center;
+            padding: 80px 20px;
+            gap: 40px;
+        }
+
+        /* Side Columns for Photos */
+        .photo-column {
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding-top: 100px;
+        }
+
+        .photo-column img {
+            width: 100%;
+            border: 8px solid white;
+            border-radius: 4px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-column img:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 5;
+        }
+
+        /* Center Letter Column */
+        .letter-column {
+            flex: 1;
+            max-width: 700px;
+        }
+
+        .letter-paper {
+            background: white;
+            padding: 60px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.1);
+            line-height: 2;
+            color: #333;
+            min-height: 1500px; /* Forces scrolling */
+            position: relative;
+        }
+
+        .letter-paper h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #f5f5dc;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        .letter-paper p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .signature {
+            margin-top: 60px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        /* Mobile Viewport Fixes */
+        @media (max-width: 900px) {
+            .photo-column { display: none; } 
+            .letter-paper { padding: 40px; }
+            .scroll-container { padding: 40px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen">
+        <h2>Private Access</h2>
+        <input type="password" id="pass-input" placeholder="Enter Secret Code">
+        <br>
+        <button id="unlock-btn" onclick="checkPassword()">Unlock</button>
+        <p id="error-msg">Incorrect. Try again!</p>
+    </div>
+
+    <div id="secret-content">
+        <div class="scroll-container">
+            
+            <div class="photo-column">
+                <img src="photo1.jpg" style="transform: rotate(-3deg);">
+                <img src="photo2.jpg" style="transform: rotate(2deg);">
+                <img src="photo3.jpg" style="transform: rotate(-1deg);">
+                <img src="photo4.jpg" style="transform: rotate(4deg);">
+            </div>
+
+            <div class="letter-column">
+                <div class="letter-paper">
+                    <h1>Happy 18th Birthday!</h1>
+                    <p>
+                        Yo! Finally, you're 18. Welcome to the world of legal adulthood, though let's be real—nothing is actually changing for us. We're still going to be the same chaotic developers.
+                    </p>
+                    <p>
+                        I wanted to make this second page a bit more personal. It's been a wild ride through school, and having a friend like you who actually gets my niche game dev jokes and glitches has made everything 10x better. 
+                    </p>
+                    <p>
+                        Take a look at the photos on the sides as you scroll through this. They're some of my favorite memories from the last few years. 
+                    </p>
+                    <p>
+                        [Add your own long message here! Keep typing to make the scroll longer.]
+                    </p>
+                    <div class="signature">
+                        Stay confused,<br>
+                        Arjun
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo-column">
+                <img src="photo5.jpg" style="transform: rotate(3deg);">
+                <img src="photo6.jpg" style="transform: rotate(-2deg);">
+                <img src="photo7.jpg" style="transform: rotate(1deg);">
+                <img src="photo8.jpg" style="transform: rotate(-4deg);">
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const input = document.getElementById('pass-input').value;
+            const error = document.getElementById('error-msg');
+            const inputField = document.getElementById('pass-input');
+            
+            // This is the encoded version of "birthday2026"
+            // It hides the password from anyone just glancing at the code.
+            const secretKey = "YmlydGhkYXkyMDI2"; 
+
+            if (btoa(input) === secretKey) {
+                // Hide lock screen
+                document.getElementById('lock-screen').style.display = 'none';
+                
+                // Show content and reset scrolling
+                document.getElementById('secret-content').style.display = 'block';
+                document.body.style.overflow = "auto";
+                document.body.style.display = "block"; 
+            } else {
+                error.style.display = 'block';
+                inputField.value = "";
+                // Red flash for wrong password
+                inputField.style.borderColor = '#ff6b6b';
+                setTimeout(() => { inputField.style.borderColor = '#2c2c2c'; }, 500);
+            }
+        }
+
+        // Support for "Enter" key
+        document.getElementById('pass-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') { checkPassword(); }
+        });
+    </script>
+</body>
+</html>
