@@ -23,17 +23,17 @@
             transition: background 0.8s ease-in-out, background-color 0.8s ease-in-out;
         }
 
-        /* --- PASSWORD SCREEN (Transparent & Lowered) --- */
+        /* --- PASSWORD SCREEN --- */
         #lock-screen {
             text-align: center;
             z-index: 100;
             padding: 50px;
-            background: transparent; /* No background */
-            border: none;             /* No border */
-            box-shadow: none;         /* No shadow */
+            background: transparent;
+            border: none;
+            box-shadow: none;
             max-width: 400px;
             width: 90%;
-            margin-top: 15vh;         /* Lowered by 15% of the viewport height */
+            margin-top: 15vh;
         }
 
         #lock-screen h2 {
@@ -42,14 +42,14 @@
             text-transform: uppercase;
             font-size: 1.1rem;
             margin-bottom: 25px;
-            color: #FFFFFF; /* Ensure this is readable against your image */
+            color: #FFFFFF;
         }
 
         #pass-input {
             padding: 15px;
             border: 2px solid #2c2c2c;
             border-radius: 4px;
-            background: rgba(255, 255, 255, 0.9); /* Slight white so the text inside is readable */
+            background: rgba(255, 255, 255, 0.9);
             font-size: 1rem;
             text-align: center;
             width: 80%;
@@ -112,11 +112,17 @@
             border-radius: 2px;
         }
 
-        /* --- BACK BUTTON STYLE --- */
-        #back-btn {
+        /* --- BUTTON CONTROLS (Bottom Right) --- */
+        .controls-group {
             position: fixed;
             bottom: 15px;
             right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        #back-btn, #fullscreen-btn {
             background: rgba(44, 44, 44, 0.3);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -127,7 +133,9 @@
             cursor: pointer;
             backdrop-filter: blur(3px);
             font-family: 'Montserrat', sans-serif;
-            z-index: 1000;
+        }
+
+        #back-btn {
             display: none; /* Hidden until unlocked */
         }
 
@@ -173,7 +181,10 @@
         </div>
     </div>
 
-    <button id="back-btn" onclick="goBack()">Back to TV</button>
+    <div class="controls-group">
+        <button id="back-btn" onclick="goBack()">Back to TV</button>
+        <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
+    </div>
 
     <script>
         function checkPassword() {
@@ -200,6 +211,20 @@
 
         function goBack() {
             window.location.href = "index.html";
+        }
+
+        function toggleFullscreen() {
+            const btn = document.getElementById('fullscreen-btn');
+            const docEl = document.documentElement;
+            if(!document.fullscreenElement && !document.webkitFullscreenElement) {
+                if (docEl.requestFullscreen) docEl.requestFullscreen();
+                else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
+                btn.innerHTML = "Minimize";
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                btn.innerHTML = "Maximize";
+            }
         }
 
         document.getElementById('pass-input').addEventListener('keypress', function (e) {
