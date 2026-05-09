@@ -1,289 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise - Part 2</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-image: url('bglockpic.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: #f5f5dc;
-            color: #2c2c2c;
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden; 
-            transition: background 0.8s ease-in-out, background-color 0.8s ease-in-out;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise - Part 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('bglockpic.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f5f5dc;
+            color: #2c2c2c;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; 
+            transition: background 0.8s ease-in-out, background-color 0.8s ease-in-out;
+        }
 
-        /* --- PASSWORD SCREEN --- */
-        #lock-screen {
-            text-align: center;
-            z-index: 100;
-            padding: 50px;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            max-width: 400px;
-            width: 90%;
-            margin-top: 15vh;
-        }
+        /* --- PASSWORD SCREEN --- */
+        #lock-screen {
+            text-align: center;
+            z-index: 100;
+            padding: 50px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            max-width: 400px;
+            width: 90%;
+            margin-top: 15vh;
+        }
 
-        #lock-screen h2 {
-            font-family: 'Syncopate', sans-serif;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            color: #FFFFFF;
-        }
+        #lock-screen h2 {
+            font-family: 'Syncopate', sans-serif;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #FFFFFF;
+        }
 
-        #pass-input {
-            padding: 15px;
-            border: 2px solid #2c2c2c;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
-            text-align: center;
-            width: 80%;
-            outline: none;
-        }
+        #pass-input {
+            padding: 15px;
+            border: 2px solid #2c2c2c;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            text-align: center;
+            width: 80%;
+            outline: none;
+        }
 
-        #unlock-btn {
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: #2c2c2c;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-        }
-        .letter-paper h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem; /* Much bigger title */
-            margin-bottom: 35px;
-            color: #1a1a1a;
-            border-bottom: 2px solid #f5f5dc;
-            padding-bottom: 20px;
-        }
+        #unlock-btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #2c2c2c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
 
-        .letter-paper p {
-            font-size: 1.3rem; /* Bigger body text */
-            line-height: 1.4; /* More spacing for readability */
-            margin-bottom: 30px;
-            color: #333;
-        }
+        .letter-paper h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem; 
+            margin-bottom: 35px;
+            color: #1a1a1a;
+            border-bottom: 2px solid #f5f5dc;
+            padding-bottom: 20px;
+        }
 
-        .signature-block {
-            margin-top: 60px;
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-style: italic;
-            font-weight: bold;
-        }
+        .letter-paper p {
+            font-size: 1.3rem; 
+            line-height: 1.4; 
+            margin-bottom: 30px;
+            color: #333;
+        }
 
-        /* --- SCROLLING CONTENT --- */
-        #secret-content {
-            display: none;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in;
-        }
+        .signature-block {
+            margin-top: 60px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-style: italic;
+            font-weight: bold;
+        }
 
-        .scroll-container {
-            display: flex;
-            justify-content: center;
-            padding: 80px 20px;
-            gap: 40px;
-        }
+        /* --- SCROLLING CONTENT --- */
+        #secret-content {
+            display: none;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
 
-        .photo-column {
-            width: 200px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            padding-top: 100px;
-        }
+        .scroll-container {
+            display: flex;
+            justify-content: center;
+            padding: 80px 20px;
+            gap: 40px;
+        }
 
-        .photo-column img {
-            width: 100%;
-            border: 8px solid white;
-            border-radius: 4px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
+        .photo-column {
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding-top: 100px;
+        }
 
-        .letter-column {
-            flex: 1;
-            max-width: 700px;
-        }
+        .photo-column img {
+            width: 100%;
+            border: 8px solid white;
+            border-radius: 4px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
 
-        .letter-paper {
-            background: white;
-            padding: 60px;
-            box-shadow: 0 10px 50px rgba(0,0,0,0.05);
-            min-height: 1200px; 
-            border-radius: 2px;
-            font-family: 'Georgia', serif; 
-        }
+        .letter-column {
+            flex: 1;
+            max-width: 700px;
+        }
 
-        /* --- BUTTON CONTROLS (Bottom Right) --- */
-        .controls-group {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            display: flex;
-            gap: 10px;
-            z-index: 1000;
-        }
+        .letter-paper {
+            background: white;
+            padding: 60px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.05);
+            min-height: 1200px; 
+            border-radius: 2px;
+            font-family: 'Georgia', serif; 
+        }
 
-        #back-btn, #fullscreen-btn, #home-btn, #lock-content-btn {
-            background: rgba(44, 44, 44, 0.3);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            backdrop-filter: blur(3px);
-            font-family: 'Montserrat', sans-serif;
-        }
+        /* --- BUTTON CONTROLS (Bottom Right) --- */
+        .controls-group {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
 
-        #back-btn {
-            display: none; /* Hidden until unlocked */
-        }
+        #back-btn, #fullscreen-btn, #home-btn, #lock-content-btn {
+            background: rgba(44, 44, 44, 0.3);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            backdrop-filter: blur(3px);
+            font-family: 'Montserrat', sans-serif;
+        }
 
-        @media (max-width: 900px) {
-            .photo-column { display: none; } 
-            .letter-paper { padding: 35px; }
-        }
-    </style>
+        @media (max-width: 900px) {
+            .photo-column { display: none; } 
+            .letter-paper { padding: 35px; }
+        }
+    </style>
 </head>
 <body>
 
-    <div id="lock-screen">
-        <h2>Private Access</h2>
-        <input type="password" id="pass-input" placeholder="Enter Secret Code">
-        <br>
-        <button id="unlock-btn" onclick="checkPassword()">Unlock</button>
-        <p id="error-msg" style="display:none; color:#ff6b6b; margin-top:15px;">Incorrect key.</p>
-    </div>
+    <div id="lock-screen">
+        <h2>Private Access</h2>
+        <input type="password" id="pass-input" placeholder="Enter Secret Code">
+        <br>
+        <button id="unlock-btn" onclick="checkPassword()">Unlock</button>
+        <p id="error-msg" style="display:none; color:#ff6b6b; margin-top:15px;">Incorrect key.</p>
+    </div>
 
-    <div id="secret-content">
-        <div class="scroll-container">
-            <div class="photo-column">
-                <img src="photo1.JPG" style="transform: rotate(-3deg);">
-                <img src="photo2.jpg" style="transform: rotate(2deg);">
-                <img src="photo3.jpg" style="transform: rotate(-1deg);">
-                <img src="photo4.jpg" style="transform: rotate(4deg);">
-                <img src="photo9.png" style="transform: rotate(-3deg);">
-                <img src="photo10.png" style="transform: rotate(2deg);">
-                <img src="photo11.JPG" style="transform: rotate(-1deg);">
-                <img src="photo16.jpg" style="transform: rotate(4deg);">
-                <img src="photo19.jpg" style="transform: rotate(-3deg);">
-                <img src="photo20.jpg" style="transform: rotate(2deg);">
-            </div>
+    <div id="secret-content">
+        <div class="scroll-container">
+            <div class="photo-column">
+                <img src="photo1.JPG" style="transform: rotate(-3deg);">
+                <img src="photo2.jpg" style="transform: rotate(2deg);">
+                <img src="photo3.jpg" style="transform: rotate(-1deg);">
+                <img src="photo4.jpg" style="transform: rotate(4deg);">
+                <img src="photo9.png" style="transform: rotate(-3deg);">
+                <img src="photo10.png" style="transform: rotate(2deg);">
+                <img src="photo11.JPG" style="transform: rotate(-1deg);">
+                <img src="photo16.jpg" style="transform: rotate(4deg);">
+                <img src="photo19.jpg" style="transform: rotate(-3deg);">
+                <img src="photo20.jpg" style="transform: rotate(2deg);">
+            </div>
 
-            <div class="letter-column">
-                <div class="letter-paper">
-                         <h1>Hellooo beautifull,</h1>
-                    <p>HAPPYYYY BIRTHDAYYY MY LIL MISSSS PERFECTTT <3</p>
-                    <p>You are an adult noww crazyyyyy, I wanttt youu to have thee best birthdayyy everrr andd I am gonnaa make sureee u remember thisss birthdayy foreverrr, I reallyy wishh u havee the greatesttt dayy andd have a reallyyy gooddd yearr ahead</p>
-                    <p>Welcome to the final part of my wish, I hopee u havee enjoyed everything till now, ik u have told that u are not really looking forward to your bday butt hopefullyy I am makeingg sure u feel spl cusss its a reallyy spl dayyy.</p>
-                    <p>You know u are THEE most inportant person in my life, like no1 andd the people who have been no1 in my life before havee not beenn half as inportantt as you are, like u have sett the standards soo fuckingg high and u keep making it higherr and higherr, literally no one can come even closee to reaching the standards even if they put their whole life justt for me, like you are the mostt perfectt home girl I could ever choose anddd udk howw luckkyy I have been thattt I got into this clg andd got in the same class and got to meett youu, like imagine I was in d or e sctions how fucked up I would have been, I am so gratefull thatt I got to be ur frd andd gotten closerr and closerr ever since, the reason I would say my life is good its cus of u and i cant evenn imagine how shitty my life would be if it wasnt for you  </p>
-                    <p>Youu have made my life soo much betterr, u have literally changed my life from a shitty guy who always feels alone in his own house and family and overthinks everything and exhausts his energy to be fine and has always felt like an option to literally a guy who can  finnalyyy sleeping without overthink and feeling shit andd You have made me  feel loved like i have never bfr anddd you have broken a mask that was soo painful andd healed me sooo muchhh without thinking abt anything, even tho it was not u who ever hurt me and made me deal with what i am feelingg rather than compressing everythingg andd justt holding it in, you have made my lifee genuinely 100x better andd I amm sooo grateful to have u in my lifeee, like you are THE BESTTTT PART OF MY LIFE</p>
-                    <p>I cant even explain how much your hug heals me like andd I cant even explain how fuckinggg goodd it felt hugging u, that tooo after craving a hug from 4 years. I am sooo addicted to u and everything abt youu andd thee onlyy thingg I ask u on ur bdays is what we both are craving forrr a the tightest hug everrr andd I cant wait in after april where we would not have to plan for a hug instead I can justt comee overrrr and pick u up andd goo to forum lolll</p>
-                    <p>You are literally not allowed to lev my life anymore u camee andd u have gotten Me addicted to youu andd now ur locked up with me forever andd yeahh andd if u still wantt too break out ur gonna be breaking my heart and honestly I will not know what to do with my life anymoree soooo noo leving no matterrr what happens, we aree too perfect together for one to lev okk????</p>
-                    <p>I promise thattt I willll dooo anything and everything forr youu andd make ur lifeee as goodd as u have made minee pluss some moree cuss you literally deserve thee besttt life possiblee anddd no matter how much of a shitty thing life throws at u I willl be there to make sureee u always will feelll the besttttttttt andd ill makee suree u never cry alone or go through smtg alone, my shoulder and shirts are always ready to gett wet for u</p>
-                    <p>I really wishhh I could have been in ur lifee bfrrr cus not only will thatt have made my life 100x better I would have neverr let u deal with ur emotions how u used to do bfr by "thinking abt it for some time and being fine"  no moree doingg thattt obviously, I would have been there always for u anddd some howw helped u gett ur freedom in your house cuss your literally sooo perfectt and you literally deserve everythingg</p>
-                    <p>Anywaysss thee onlyy thinggg we can doo forr the fact that I wasn't in ur life for 16yrs is compensate every lil second during these Hollidays and I hopee I makee ur lifee actually fun andd i promise that Ill help u deall with every lil thing u go through withhh</p>
-                    <p>I hope u reallyy enjoyed your day tdyy andd I hope I have lived up too expectations andd I hopee ur smiling and giggling while reading thisss orr evennn betterrr if I am there with youuu, I reallyyy hope u likee ittt Andd Potentially givee me the bestt wish award lolll</p>
-                    <p>I never ever want you to forget howw muchhhh I lovee youu lil misss, I lovee youuu sooooo fuckkingg muchhh andd I willl loveee youu foreverrr and everrr anddd everrrr, youuuu areee my perfectttt home girl , justtt theee besttttt , likeee fuckkk there is no words thatt describe how fucking perfect you aree and how much I fucking lovee youuu my beautifull andd no matterr how many timess I sayy it will never be enough and I am reallyyy addicted too youuu andd justtt cravee you soo muchhh I reallyy needd you in my lifee a lotttt</p>
-                    <p>I wishhh you a happyy birthdayyy againnnn myy adult misss, I lovee youu soo fuckingggg muchhh andd this year after in may is gonnaaaa be goateddddd everything from license too endless hanging outt andd everythinggggg</p>
-                  
-                </div>
-            </div>
+            <div class="letter-column">
+                <div class="letter-paper">
+                     <h1>Hellooo beautifull,</h1>
+                     <p>HAPPYYYY BIRTHDAYYY MY LIL MISSSS PERFECTTT <3</p>
+                     <p>You are an adult noww crazyyyyy, I wanttt youu to have thee best birthdayyy everrr andd I am gonnaa make sureee u remember thisss birthdayy foreverrr, I reallyy wishh u havee the greatesttt dayy andd have a reallyyy gooddd yearr ahead</p>
+                     <p>Welcome to the final part of my wish, I hopee u havee enjoyed everything till now, ik u have told that u are not really looking forward to your bday butt hopefullyy I am makeingg sure u feel spl cusss its a reallyy spl dayyy.</p>
+                     <p>You know u are THEE most inportant person in my life, like no1 andd the people who have been no1 in my life before havee not beenn half as inportantt as you are, like u have sett the standards soo fuckingg high and u keep making it higherr and higherr, literally no one can come even closee to reaching the standards even if they put their whole life justt for me, like you are the mostt perfectt home girl I could ever choose anddd udk howw luckkyy I have been thattt I got into this clg andd got in the same class and got to meett youu, like imagine I was in d or e sctions how fucked up I would have been, I am so gratefull thatt I got to be ur frd andd gotten closerr and closerr ever since, the reason I would say my life is good its cus of u and i cant evenn imagine how shitty my life would be if it wasnt for you  </p>
+                     <p>Youu have made my life soo much betterr, u have literally changed my life from a shitty guy who always feels alone in his own house and family and overthinks everything and exhausts his energy to be fine and has always felt like an option to literally a guy who can  finnalyyy sleeping without overthink and feeling shit andd You have made me  feel loved like i have never bfr anddd you have broken a mask that was soo painful andd healed me sooo muchhh without thinking abt anything, even tho it was not u who ever hurt me and made me deal with what i am feelingg rather than compressing everythingg andd justt holding it in, you have made my lifee genuinely 100x better andd I amm sooo grateful to have u in my lifeee, like you are THE BESTTTT PART OF MY LIFE</p>
+                     <p>I cant even explain how much your hug heals me like andd I cant even explain how fuckinggg goodd it felt hugging u, that tooo after craving a hug from 4 years. I am sooo addicted to u and everything abt youu andd thee onlyy thingg I ask u on ur bdays is what we both are craving forrr a the tightest hug everrr andd I cant wait in after april where we would not have to plan for a hug instead I can justt comee overrrr and pick u up andd goo to forum lolll</p>
+                     <p>You are literally not allowed to lev my life anymore u camee andd u have gotten Me addicted to youu andd now ur locked up with me forever andd yeahh andd if u still wantt too break out ur gonna be breaking my heart and honestly I will not know what to do with my life anymoree soooo noo leving no matterrr what happens, we aree too perfect together for one to lev okk????</p>
+                     <p>I promise thattt I willll dooo anything and everything forr youu andd make ur lifeee as goodd as u have made minee pluss some moree cuss you literally deserve thee besttt life possiblee anddd no matter how much of a shitty thing life throws at u I willl be there to make sureee u always will feelll the besttttttttt andd ill makee suree u never cry alone or go through smtg alone, my shoulder and shirts are always ready to gett wet for u</p>
+                     <p>I really wishhh I could have been in ur lifee bfrrr cus not only will thatt have made my life 100x better I would have neverr let u deal with ur emotions how u used to do bfr by "thinking abt it for some time and being fine"  no moree doingg thattt obviously, I would have been there always for u anddd some howw helped u gett ur freedom in your house cuss your literally sooo perfectt and you literally deserve everythingg</p>
+                     <p>Anywaysss thee onlyy thinggg we can doo forr the fact that I wasn't in ur life for 16yrs is compensate every lil second during these Hollidays and I hopee I makee ur lifee actually fun andd i promise that Ill help u deall with every lil thing u go through withhh</p>
+                     <p>I hope u reallyy enjoyed your day tdyy andd I hope I have lived up too expectations andd I hopee ur smiling and giggling while reading thisss orr evennn betterrr if I am there with youuu, I reallyyy hope u likee ittt Andd Potentially givee me the bestt wish award lolll</p>
+                     <p>I never ever want you to forget howw muchhhh I lovee youu lil misss, I lovee youuu sooooo fuckkingg muchhh andd I willl loveee youu foreverrr and everrr anddd everrrr, youuuu areee my perfectttt home girl , justtt theee besttttt , likeee fuckkk there is no words thatt describe how fucking perfect you aree and how much I fucking lovee youuu my beautifull andd no matterr how many timess I sayy it will never be enough and I am reallyyy addicted too youuu andd justtt cravee you soo muchhh I reallyy needd you in my lifee a lotttt</p>
+                     <p>I wishhh you a happyy birthdayyy againnnn myy adult misss, I lovee youu soo fuckingggg muchhh andd this year after in may is gonnaaaa be goateddddd everything from license too endless hanging outt andd everythinggggg</p>
+                </div>
+            </div>
 
-            <div class="photo-column">
-                <img src="photo5.jpg" style="transform: rotate(3deg);">
-                <img src="photo6.jpg" style="transform: rotate(-2deg);">
-                <img src="photo7.jpg" style="transform: rotate(1deg);">
-                <img src="photo8.jpg" style="transform: rotate(-4deg);">
-                <img src="photo13.jpg" style="transform: rotate(3deg);">
-                <img src="photo14.jpg" style="transform: rotate(-2deg);">
-                <img src="photo15.jpg" style="transform: rotate(1deg);">
-                <img src="photo12.JPG" style="transform: rotate(-4deg);">
-                <img src="photo17.jpg" style="transform: rotate(3deg);">
-                <img src="photo18.jpg" style="transform: rotate(-2deg);">
-            </div>
-        </div>
-    </div>
+            <div class="photo-column">
+                <img src="photo5.jpg" style="transform: rotate(3deg);">
+                <img src="photo6.jpg" style="transform: rotate(-2deg);">
+                <img src="photo7.jpg" style="transform: rotate(1deg);">
+                <img src="photo8.jpg" style="transform: rotate(-4deg);">
+                <img src="photo13.jpg" style="transform: rotate(3deg);">
+                <img src="photo14.jpg" style="transform: rotate(-2deg);">
+                <img src="photo15.jpg" style="transform: rotate(1deg);">
+                <img src="photo12.JPG" style="transform: rotate(-4deg);">
+                <img src="photo17.jpg" style="transform: rotate(3deg);">
+                <img src="photo18.jpg" style="transform: rotate(-2deg);">
+            </div>
+        </div>
+    </div>
 
-    <div class="controls-group">
-        <button id="home-btn" onclick="goBack()">Back to TV</button>
+    <div class="controls-group">
+        <button id="home-btn" onclick="goBack()">Back to TV</button>
         
         <!-- Visible only after unlocking -->
         <button id="lock-content-btn" style="display: none;" onclick="location.reload()">Back to Lock</button>
-        <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
-    </div>
+        <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
+    </div>
 
-    <script>
-        function checkPassword() {
-            const input = document.getElementById('pass-input').value;
-            const secretKey = "TGlsTWlzc1BlcmZlY3Q="; 
+    <script>
+        function checkPassword() {
+            const input = document.getElementById('pass-input').value;
+            const secretKey = "TGlsTWlzc1BlcmZlY3Q="; 
 
-            if (btoa(input) === secretKey) {
-                document.getElementById('lock-screen').style.display = 'none';
+            if (btoa(input) === secretKey) {
+                document.getElementById('lock-screen').style.display = 'none';
                 document.getElementById('home-btn').style.display = 'none';
-                document.body.style.backgroundImage = "url('inpic5.jpg')";
-                document.body.style.backgroundColor = "#fdfaf0"; 
-                
-                const content = document.getElementById('secret-content');
-                content.style.display = 'block';
-                setTimeout(() => { content.style.opacity = '1'; }, 50);
-                
-                document.getElementById('lock-content-btn').style.display = 'block';
-                document.body.style.overflow = "auto";
-                document.body.style.display = "block"; 
-            } else {
-                document.getElementById('error-msg').style.display = 'block';
-                document.getElementById('pass-input').value = "";
-            }
-        }
+                document.body.style.backgroundImage = "url('inpic5.jpg')";
+                document.body.style.backgroundColor = "#fdfaf0"; 
+                
+                const content = document.getElementById('secret-content');
+                content.style.display = 'block';
+                setTimeout(() => { content.style.opacity = '1'; }, 50);
+                
+                document.getElementById('lock-content-btn').style.display = 'block';
+                document.body.style.overflow = "auto";
+                document.body.style.display = "block"; 
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+                document.getElementById('pass-input').value = "";
+            }
+        }
 
-        function goBack() {
-            window.location.href = "index.html";
-        }
+        function goBack() {
+            window.location.href = "index.html";
+        }
 
-        function toggleFullscreen() {
-            const btn = document.getElementById('fullscreen-btn');
-            const docEl = document.documentElement;
-            if(!document.fullscreenElement && !document.webkitFullscreenElement) {
-                if (docEl.requestFullscreen) docEl.requestFullscreen();
-                else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
-                btn.innerHTML = "Minimize";
-            } else {
-                if (document.exitFullscreen) document.exitFullscreen();
-                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-                btn.innerHTML = "Maximize";
-            }
-        }
+        function toggleFullscreen() {
+            const btn = document.getElementById('fullscreen-btn');
+            const docEl = document.documentElement;
+            if(!document.fullscreenElement && !document.webkitFullscreenElement) {
+                if (docEl.requestFullscreen) docEl.requestFullscreen();
+                else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
+                btn.innerHTML = "Minimize";
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                btn.innerHTML = "Maximize";
+            }
+        }
 
-        document.getElementById('pass-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') { checkPassword(); }
-        });
-    </script>
+        document.getElementById('pass-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') { checkPassword(); }
+        });
+    </script>
 </body>
 </html>
-
-
