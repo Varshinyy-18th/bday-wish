@@ -162,98 +162,89 @@
         <button id="back-btn" style="display: none;" onclick="location.reload()">Back to Timer</button>
         
         <!-- Skip button: only shows on countdown page -->
-        <button id="skip-btn" onclick="bypassCountdown()">Skip Timer (Debug)</button>
+        <button id="skip-btn" onclick="bypassCountdown()">Next Surprise</button>
     </div>
 
     <script>
-        const YOUTUBE_VIDEO_ID = '9bClz1ps-Z4';
-        const birthdayDate = new Date("2026-04-10T01:10:00").getTime();
+    const YOUTUBE_VIDEO_ID = '9bClz1ps-Z4';
+    const birthdayDate = new Date("2026-04-10T01:10:00").getTime();
 
-        const preLoadImg = new Image();
-        preLoadImg.src = "download.jpg";
+    const preLoadImg = new Image();
+    preLoadImg.src = "download.jpg";
 
-        function toggleFullscreen() {
-            const btn = document.getElementById('fullscreen-btn');
-            const docEl = document.documentElement;
-            if(!document.fullscreenElement && !document.webkitFullscreenElement) {
-                if (docEl.requestFullscreen) docEl.requestFullscreen();
-                else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
-                btn.innerHTML = "Minimize";
-            } else {
-                if (document.exitFullscreen) document.exitFullscreen();
-                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-                btn.innerHTML = "Maximize";
-            }
+    function toggleFullscreen() {
+        const btn = document.getElementById('fullscreen-btn');
+        const docEl = document.documentElement;
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+            if (docEl.requestFullscreen) docEl.requestFullscreen();
+            else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
+            btn.innerHTML = "Minimize";
+        } else {
+            if (document.exitFullscreen) document.exitFullscreen();
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+            btn.innerHTML = "Maximize";
         }
+    }
 
-        function goToNextPage() {
-            // Change this to your actual file name
-            window.location.href = "suprise2.html"; 
-        }
-        
-        function bypassCountdown() {
-            // Stop the timer loop
+    function goToNextPage() {
+        window.location.href = "suprise2.html";
+    }
+
+    function bypassCountdown() {
+        clearInterval(timer);
+        triggerCelebration();
+    }
+
+    function triggerCelebration() {
+        // Swap visuals
+        document.body.style.backgroundImage = "url('download.jpg')";
+        document.getElementById("countdown-section").style.display = "none";
+        document.getElementById("celebration").style.display = "flex";
+
+        // Toggle button visibility
+        document.getElementById("next-page-btn").style.display = "block";
+        document.getElementById("back-btn").style.display = "block";
+        document.getElementById("skip-btn").style.display = "none";
+
+        // Load the video
+        document.getElementById("yt-player-container").innerHTML = `
+            <iframe src="https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0" 
+            allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+
+        launchConfetti();
+    }
+
+    function launchConfetti() {
+        var duration = 5 * 1000;
+        var end = Date.now() + duration;
+        (function frame() {
+            confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+            confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+            if (Date.now() < end) { requestAnimationFrame(frame); }
+        }());
+    }
+
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = birthdayDate - now;
+
+        if (distance < 0) {
             clearInterval(timer);
-            
-            // Swap visuals
-            document.body.style.backgroundImage = "url('download.jpg')";
-            document.getElementById("countdown-section").style.display = "none";
-            document.getElementById("celebration").style.display = "flex";
-            
-            // Toggle button visibility
-            document.getElementById("next-page-btn").style.display = "block";
-            document.getElementById("back-btn").style.display = "block";
-            document.getElementById("skip-btn").style.display = "none";
-
-            // Load the video
-            document.getElementById("yt-player-container").innerHTML = `
-                <iframe src="https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0" 
-                allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-            
-            launchConfetti();
-
-        function launchConfetti() {
-            var duration = 5 * 1000;
-            var end = Date.now() + duration;
-            (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
-                if (Date.now() < end) { requestAnimationFrame(frame); }
-            }());
+            triggerCelebration();
+            return;
         }
 
-        const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = birthdayDate - now;
+        const days = Math.floor(distance / 86400000);
+        const hours = Math.floor((distance % 86400000) / 3600000);
+        const minutes = Math.floor((distance % 3600000) / 60000);
+        const seconds = Math.floor((distance % 60000) / 1000);
 
-            if (distance < 0) {
-                clearInterval(timer);
-                document.body.style.backgroundImage = "url('download.jpg')";
-                document.getElementById("countdown-section").style.display = "none";
-                document.getElementById("celebration").style.display = "flex";
-                
-                // Show the next page button when celebration starts
-                document.getElementById("next-page-btn").style.display = "block";
-
-                document.getElementById("yt-player-container").innerHTML = `
-                    <iframe src="https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0" 
-                    allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-                
-                launchConfetti(); 
-                return;
-            }
-
-            const days = Math.floor(distance / 86400000);
-            const hours = Math.floor((distance % 86400000) / 3600000);
-            const minutes = Math.floor((distance % 3600000) / 60000);
-            const seconds = Math.floor((distance % 60000) / 1000);
-
-            document.getElementById("days").innerHTML = (days < 10 ? "0"+days : days);
-            document.getElementById("hours").innerHTML = (hours < 10 ? "0"+hours : hours);
-            document.getElementById("minutes").innerHTML = (minutes < 10 ? "0"+minutes : minutes);
-            document.getElementById("seconds").innerHTML = (seconds < 10 ? "0"+seconds : seconds);
-        }, 1000);
-    </script>
+        document.getElementById("days").innerHTML = (days < 10 ? "0" + days : days);
+        document.getElementById("hours").innerHTML = (hours < 10 ? "0" + hours : hours);
+        document.getElementById("minutes").innerHTML = (minutes < 10 ? "0" + minutes : minutes);
+        document.getElementById("seconds").innerHTML = (seconds < 10 ? "0" + seconds : seconds);
+    }, 1000);
+</script>
 </body>
 </html>
 
