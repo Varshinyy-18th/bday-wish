@@ -158,16 +158,15 @@
 
     <div class="controls-group">
         <button id="next-page-btn" onclick="goToNextPage()">Next Surprise</button>
-        <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
         <button id="back-btn" style="display: none;" onclick="location.reload()">Back to Timer</button>
-        
+        <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
         <!-- Skip button: only shows on countdown page -->
         <button id="skip-btn" onclick="bypassCountdown()">Next Surprise</button>
     </div>
 
     <script>
     const YOUTUBE_VIDEO_ID = '9bClz1ps-Z4';
-    const birthdayDate = new Date("2026-04-10T01:10:00").getTime();
+    const birthdayDate = new Date("2027-04-10T01:10:00").getTime();
 
     const preLoadImg = new Image();
     preLoadImg.src = "download.jpg";
