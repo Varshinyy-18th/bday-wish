@@ -106,7 +106,7 @@
         }
 
         /* Shared style for both buttons */
-        #fullscreen-btn, #next-page-btn {
+        #fullscreen-btn, #next-page-btn, #skip-btn, #back-btn {
             background: rgba(44, 44, 44, 0.3);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -159,6 +159,10 @@
     <div class="controls-group">
         <button id="next-page-btn" onclick="goToNextPage()">Next Surprise</button>
         <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
+        <button id="back-btn" style="display: none;" onclick="location.reload()">Back to Timer</button>
+        
+        <!-- Skip button: only shows on countdown page -->
+        <button id="skip-btn" onclick="bypassCountdown()">Skip Timer (Debug)</button>
     </div>
 
     <script>
@@ -186,6 +190,27 @@
             // Change this to your actual file name
             window.location.href = "suprise2.html"; 
         }
+        
+        function bypassCountdown() {
+            // Stop the timer loop
+            clearInterval(timer);
+            
+            // Swap visuals
+            document.body.style.backgroundImage = "url('download.jpg')";
+            document.getElementById("countdown-section").style.display = "none";
+            document.getElementById("celebration").style.display = "flex";
+            
+            // Toggle button visibility
+            document.getElementById("next-page-btn").style.display = "block";
+            document.getElementById("back-btn").style.display = "block";
+            document.getElementById("skip-btn").style.display = "none";
+
+            // Load the video
+            document.getElementById("yt-player-container").innerHTML = `
+                <iframe src="https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0" 
+                allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            
+            launchConfetti();
 
         function launchConfetti() {
             var duration = 5 * 1000;
