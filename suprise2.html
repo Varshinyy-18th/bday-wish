@@ -146,7 +146,7 @@
             z-index: 1000;
         }
 
-        #back-btn, #fullscreen-btn {
+       #home-btn, #lock-btn, #fullscreen-btn {
             background: rgba(44, 44, 44, 0.3);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -229,7 +229,8 @@
     </div>
 
     <div class="controls-group">
-        <button id="back-btn" onclick="goBack()">Back to TV</button>
+        <button id="home-btn" onclick="goBack()">Back to TV</button>
+        <button id="lock-content-btn" style="display: none;" onclick="location.reload()">Back to Lock</button>
         <button id="fullscreen-btn" onclick="toggleFullscreen()">Maximize</button>
     </div>
 
@@ -247,7 +248,9 @@
                 content.style.display = 'block';
                 setTimeout(() => { content.style.opacity = '1'; }, 50);
                 
-                document.getElementById('back-btn').style.display = 'block';
+                
+                document.getElementById('home-btn').style.display = 'none'; // Swap buttons
+                document.getElementById('lock-content-btn').style.display = 'block';
                 document.body.style.overflow = "auto";
                 document.body.style.display = "block"; 
             } else {
